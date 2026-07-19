@@ -1,5 +1,4 @@
 using BuildingBlocks.Extentions;
-using Marten;
 
 var builder = WebApplication.CreateBuilder(args);
 
