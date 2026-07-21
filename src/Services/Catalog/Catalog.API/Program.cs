@@ -1,13 +1,18 @@
+using BuildingBlocks.Behaviors;
 using BuildingBlocks.Extentions;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCarterWithAssemblies(typeof(Program).Assembly);
+var assembly = typeof(Program).Assembly;
+builder.Services.AddCarterWithAssemblies(assembly);
 
 builder.Services.AddMediatR(config =>
 {
-    config.RegisterServicesFromAssembly(typeof(Program).Assembly);
+    config.RegisterServicesFromAssembly(assembly);
+    config.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
+builder.Services.AddValidatorsFromAssembly(assembly);
 
 builder.Services.AddMarten(options =>
 {
