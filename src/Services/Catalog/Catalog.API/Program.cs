@@ -1,7 +1,3 @@
-using BuildingBlocks.Behaviors;
-using BuildingBlocks.Extentions;
-using FluentValidation;
-
 var builder = WebApplication.CreateBuilder(args);
 
 var assembly = typeof(Program).Assembly;
@@ -19,7 +15,11 @@ builder.Services.AddMarten(options =>
     options.Connection(builder.Configuration.GetConnectionString("Database")!);
 }).UseLightweightSessions();
 
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 var app = builder.Build();
+
+app.UseExceptionHandler(options => { });
 
 app.MapCarter();
 
