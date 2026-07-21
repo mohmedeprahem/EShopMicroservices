@@ -19,13 +19,11 @@
         }
     }
 
-    internal class UpdateProductHandler(IDocumentSession session, ILogger<UpdateProductHandler> logger)
+    internal class UpdateProductHandler(IDocumentSession session)
         : ICommandHandler<UpdateProductCommand, UpdateProductResult>
     {
         public async Task<UpdateProductResult> Handle(UpdateProductCommand command, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Updating product with ID: {ProductId}", command.Id);
-
             var product = await session.LoadAsync<Product>(command.Id, cancellationToken);
 
             if (product == null)
