@@ -2,13 +2,13 @@
 {
     public record GetBasketQuery(string UserName) : IQuery<GetBasketResult>;
     public record GetBasketResult(ShoppingCart Cart);
-    public class GetBasketHandler(IDocumentSession session) : IQueryHandler<GetBasketQuery, GetBasketResult>
+    public class GetBasketHandler(IBasketRepository basketRepository) : IQueryHandler<GetBasketQuery, GetBasketResult>
     {
         public async Task<GetBasketResult> Handle(GetBasketQuery request, CancellationToken cancellationToken)
         {
-            var cart = await session.Query<ShoppingCart>().FirstOrDefaultAsync(sc => sc.UserName == request.UserName, cancellationToken);
+            var cart = await basketRepository.GetBasket(request.UserName, cancellationToken);
 
-            return cart is not null ? new GetBasketResult(cart) : throw new InvalidOperationException("Basket not found");
+            return new GetBasketResult(cart);
         }
     }
 }
