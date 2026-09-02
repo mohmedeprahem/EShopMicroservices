@@ -4,7 +4,7 @@
   </Folder>
   <Folder Name="/Services/" />
   <Folder Name="/Services/Basket/">
-    <Project Path="Services/Backet/Basket.API/Basket.API.csproj" Id="c16837c5-3bb1-4d90-b573-b4f0ebadc029" />
+    <Project Path="Services/Basket/Basket.API/Basket.API.csproj" Id="c16837c5-3bb1-4d90-b573-b4f0ebadc029" />
   </Folder>
   <Folder Name="/Services/Catalog/">
     <Project Path="Services/Catalog/Catalog.API/Catalog.API.csproj" Id="2601ed7a-3632-4597-a9bb-27f345e1d7a4" />

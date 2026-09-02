@@ -9,7 +9,7 @@ namespace Basket.API.Data
         {
             await basketRepository.DeleteBasket(userName, cancellationToken);
 
-            await cache.GetStringAsync(userName, cancellationToken);
+            await cache.RemoveAsync(userName, cancellationToken);
 
             return true;
         }
