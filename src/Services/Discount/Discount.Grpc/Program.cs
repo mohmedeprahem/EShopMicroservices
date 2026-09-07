@@ -8,7 +8,7 @@ builder.Services.AddGrpcReflection();
 
 builder.Services.AddDbContext<DiscountContext>(options =>
 {
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")!);
+    options.UseSqlite(builder.Configuration.GetConnectionString("Database")!);
 });
 
 // Add services to the container.
