@@ -1,4 +1,5 @@
 using BuildingBlocks.Extentions;
+using Discount.Grpc;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
@@ -29,13 +30,30 @@ builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 
+builder.Services.AddGrpcClient<DiscountProtoServie.DiscountProtoServieClient>(options =>
+{
+    options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+})
+.ConfigurePrimaryHttpMessageHandler(() =>
+{
+    var handler = new HttpClientHandler
+    {
+        ServerCertificateCustomValidationCallback =
+        HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+    };
+
+    return handler;
+});
+
 builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
     .AddRedis(builder.Configuration.GetConnectionString("Redis")!);
 
+
 var app = builder.Build();
 
 app.MapCarter();
+
 app.UseExceptionHandler(options => { });
 app.UseHealthChecks("/health",
     new HealthCheckOptions
