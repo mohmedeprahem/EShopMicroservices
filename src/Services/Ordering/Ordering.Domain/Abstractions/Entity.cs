@@ -5,7 +5,9 @@ public abstract class Entity<TId> : IEntity<TId>
     {
         Id = id;
     }
-    public TId Id { get; private init; }
+    protected Entity() { }
+
+    public TId Id { get; private init; } = default!;
     public DateTime? CreatedAt { get; set; }
     public string? CreatedBy { get; set; }
     public DateTime? LastModified { get; set; }

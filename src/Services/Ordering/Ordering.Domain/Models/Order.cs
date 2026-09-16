@@ -18,6 +18,8 @@ public class Order : Aggregate<OrderId>
         get => OrderItems.Sum(x => x.Price * x.Quantity);
         private set { }
     }
+    protected Order() { }
+
 
     private Order(OrderId id, CustomerId customerId, OrderName orderName, Address shippingAddress, Address billingAddress, Payment payment) : base(id)
     {

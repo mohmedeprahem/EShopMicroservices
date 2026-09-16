@@ -3,7 +3,7 @@
 public abstract class Aggregate<TId> : Entity<TId>, IAggregate<TId>
 {
     private readonly List<IDomainEvent> _domainEvents = new();
-
+    protected Aggregate() { }
     protected Aggregate(TId id) : base(id)
     {
     }
