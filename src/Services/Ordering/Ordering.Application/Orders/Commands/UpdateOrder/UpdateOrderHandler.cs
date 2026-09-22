@@ -7,7 +7,9 @@ public class UpdateOrderHandler(IApplicationContext dbContext) : ICommandHandler
 {
     public async Task<UpdateOrderResult> Handle(UpdateOrderCommand command, CancellationToken cancellationToken)
     {
-        var order = await dbContext.Orders.FindAsync([command.Order.Id], cancellationToken);
+        var orderId = OrderId.Of(command.Order.Id);
+
+        var order = await dbContext.Orders.FindAsync([orderId], cancellationToken);
 
         if (order is null)
         {

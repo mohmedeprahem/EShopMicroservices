@@ -21,11 +21,14 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
             .WithOne()
             .HasForeignKey(oi => oi.OrderId);
 
-        builder.Property(o => o.OrderName)
-            .HasConversion(
-                on => on.Value,
-                value => OrderName.Of(value))
-            .IsRequired();
+        builder.ComplexProperty(
+            o => o.OrderName, nameBuilder =>
+            {
+                nameBuilder.Property(n => n.Value)
+                    .HasColumnName(nameof(Order.OrderName))
+                    .HasMaxLength(100)
+                    .IsRequired();
+            });
 
         builder.ComplexProperty(
             o => o.ShippingAddress, addressBuilder =>
