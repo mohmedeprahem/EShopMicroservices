@@ -2,6 +2,7 @@ using BuildingBlocks.Extentions;
 using Discount.Grpc;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using BuildingBlocks.Messaging.MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,9 @@ builder.Services.AddStackExchangeRedisCache(options =>
 });
 
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+
+builder.Services.AddMessageBroker(builder.Configuration);
+
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 

@@ -29,6 +29,16 @@ services:
       context: .
       dockerfile: Services/Discount/Discount.Grpc/Dockerfile
 
+  ordering.api:
+    image: ${DOCKER_REGISTRY-}orderingapi
+    build:
+      context: .
+      dockerfile: Services/Ordering/Ordering.API/Dockerfile
+
+  messagebroker:
+    image: rabbitmq:management
+
 volumes:
   postgres_catalog:
   postgres_basket:
+

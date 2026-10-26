@@ -1,11 +1,15 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BuildingBlocks.Messaging.MassTransit;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.FeatureManagement;
 using System.Reflection;
 
 namespace Ordering.Application
 {
     public static class DependancyInjection
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        public static IServiceCollection AddApplicationServices
+            (this IServiceCollection services, IConfiguration configuration)
         {
             var assembly = Assembly.GetExecutingAssembly();
 
@@ -13,6 +17,9 @@ namespace Ordering.Application
             {
                 config.RegisterServicesFromAssembly(assembly);
             });
+
+            services.AddFeatureManagement();
+            services.AddMessageBroker(configuration, Assembly.GetExecutingAssembly());
 
             return services;
         }
